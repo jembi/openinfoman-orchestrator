@@ -26,17 +26,31 @@ pollService = (name) ->
   req.end();
 
 mergeServices = ->
-  console.log "Merging services..."
+  console.log "Empty existing merged service"
   options =
     hostname: csdHost
     port: csdPort
-    path: '/CSD/mergeServices/merge'
+    path: '/CSD/mergeServices/empty'
     method: 'GET'
   req = http.request options, (res) ->
     if res.statusCode == 302
-      console.log "Successfully merged services"
+      console.log "Successfully emptied services"
+      console.log "Merging updated services..."
+      options =
+        hostname: csdHost
+        port: csdPort
+        path: '/CSD/mergeServices/merge'
+        method: 'GET'
+      req = http.request options, (res) ->
+        if res.statusCode == 302
+          console.log "Successfully merged services"
+          console.log "Sleeping until next interval...\n"
+        else
+          console.log "Failed to merge services"
+      req.end()
     else
-      console.log "Failed to merge services"
+      console.log "Failed to empty services"
+
   req.end()
 
 mergeServiceWhenDone = ->
