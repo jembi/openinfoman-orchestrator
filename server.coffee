@@ -56,6 +56,3 @@ pollAndMergeServices = (name) ->
 
 pollAndMergeServices()
 setInterval pollAndMergeServices, pollTimeMS
-
-#pollService "openinfoman_providers";
-#mergeServices()
